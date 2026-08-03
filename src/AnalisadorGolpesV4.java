@@ -9,7 +9,10 @@ public class AnalisadorGolpesV4 {
         ResultadoV4 resultado = new ResultadoV4();
 
         // Converte para minúsculas e remove acentos
-        String texto = Normalizer.normalize(mensagem.toLowerCase(), Normalizer.Form.NFD);
+        String texto = Normalizer.normalize(
+                mensagem.toLowerCase(),
+                Normalizer.Form.NFD
+        );
         texto = texto.replaceAll("\\p{M}", "");
 
         int pontuacao = 0;
@@ -23,16 +26,16 @@ public class AnalisadorGolpesV4 {
 
                 pontuacao += entrada.getValue();
                 resultado.adicionarMotivo(
-                        "Palavra suspeita encontrada: " + entrada.getKey());
-
+                        "Palavra suspeita encontrada: " + entrada.getKey()
+                );
             }
         }
 
         // Procura links
-        if (texto.contains("http://") ||
-                texto.contains("https://") ||
-                texto.contains("www.") ||
-                texto.contains(".com")) {
+        if (texto.contains("http://")
+                || texto.contains("https://")
+                || texto.contains("www.")
+                || texto.contains(".com")) {
 
             pontuacao += 20;
             resultado.adicionarMotivo("Mensagem contém link.");
@@ -89,17 +92,21 @@ public class AnalisadorGolpesV4 {
 
             resultado.setNivel("SEGURO");
 
-        } else if (pontuacao <= 20) {
+        } else if (pontuacao <= 30) {
 
             resultado.setNivel("BAIXO");
 
-        } else if (pontuacao <= 40) {
+        } else if (pontuacao <= 50) {
 
             resultado.setNivel("MODERADO");
 
-        } else {
+        } else if (pontuacao <= 90) {
 
             resultado.setNivel("ALTO");
+
+        } else {
+
+            resultado.setNivel("RISCO GIGANORME, CORREEE!");
         }
 
         return resultado;

@@ -117,7 +117,7 @@ public class PalavrasSuspeitas {
         palavras.put("registrado", 10);
         palavras.put("registro", 10);
         palavras.put("atencao", 10);
-        palavras.put("automaticamente", 10);
+        palavras.put("automaticamente", 4);
 
         // =========================
         // Golpes comuns
